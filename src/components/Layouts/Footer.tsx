@@ -29,14 +29,14 @@ export default function Footer({ id = "" }: Readonly<FooterProps>) {
 
   return (
     <motion.div
-      className="h-screen flex items-center justify-center text-4xl font-bold p-5"
+      className="h-screen flex items-center justify-center text-4xl font-bold"
       id={id}
       variants={fadeUpSection}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true }}
     >
-      <div className="relative rounded-4xl w-full h-full overflow-hidden">
+      <div className="relative w-full h-full overflow-hidden">
         {galleryData.map((img, index) => (
           <div
             key={index}

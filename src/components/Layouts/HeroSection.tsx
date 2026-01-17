@@ -46,7 +46,7 @@ export default function HeroSection({ id = "" }: Readonly<HeroSectionProps>) {
         </p>
       </div>
 
-      <div className="absolute lg:w-30 md:w-25 w-20 aspect-square rounded-full border-2 top-1/2 left-1/2 -translate-1/2 transition-all duration-300 "></div>
+      {/* <div className="absolute lg:w-30 md:w-25 w-20 aspect-square rounded-full border-2 top-1/2 left-1/2 -translate-1/2 transition-all duration-300 "></div> */}
     </motion.div>
   );
 }
