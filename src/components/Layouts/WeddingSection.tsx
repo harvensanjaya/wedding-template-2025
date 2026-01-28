@@ -36,7 +36,7 @@ export default function WeddingSection(props: Readonly<WeddingSectionProps>) {
               <img
                 src={WeddingRingIcon}
                 alt=""
-                className="opacity-40 md:w-13 w-10 transition-all duration-300"
+                className="opacity-40 md:w-13 w-10 transition-all duration-300 scale-x-[-1]"
               />
             </div>
             <div className="h-full flex flex-col justify-center items-center shadow-[0px_4px_22px_3px_rgba(0,0,0,0.1)] md:gap-8 gap-5 transition-all duration-300">
@@ -64,7 +64,7 @@ export default function WeddingSection(props: Readonly<WeddingSectionProps>) {
               <img
                 src={WeddingRingIcon}
                 alt=""
-                className="opacity-40 md:w-13 w-10 transition-all duration-300"
+                className="opacity-40 md:w-13 w-10 transition-all duration-300 scale-x-[-1]"
               />
             </div>
             <div className="h-full flex flex-col justify-center items-center shadow-[0px_4px_22px_3px_rgba(0,0,0,0.1)] md:gap-8 gap-5 transition-all duration-300">

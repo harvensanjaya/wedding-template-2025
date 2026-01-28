@@ -29,39 +29,63 @@ export default function GallerySection(props: Readonly<GallerySectionProps>) {
       <h2 className="font-italiana md:text-6xl text-5xl transition-all duration-300">
         GALLERY
       </h2>
-      <div className="grid w-full grid-cols-6 lg:auto-rows-[400px] auto-rows-[200px]">
+      <div className="grid w-full grid-cols-6 lg:auto-rows-[400px] auto-rows-[200px] bg-black">
         <button
-          className="col-span-2 w-full h-full cursor-pointer"
+          className="col-span-2 w-full h-full cursor-pointer hover:opacity-40 transition-all duration-300"
           onClick={onOpen}
         >
-          <img src={Image1} alt="" className="w-full h-full object-cover" />
+          <img
+            src={Image1}
+            alt=""
+            className="w-full h-full object-cover hover:opacity-40 transition-all duration-300"
+          />
         </button>
         <button
           className="col-span-4 w-full h-full cursor-pointer"
           onClick={onOpen}
         >
-          <img src={Image2} alt="" className="w-full h-full object-cover" />
+          <img
+            src={Image2}
+            alt=""
+            className="w-full h-full object-cover hover:opacity-40 transition-all duration-300"
+          />
         </button>
         <button
           className=" col-span-3 w-full h-full cursor-pointer"
           onClick={onOpen}
         >
-          <img src={Image3} alt="" className=" w-full h-full object-cover" />
+          <img
+            src={Image3}
+            alt=""
+            className=" w-full h-full object-cover hover:opacity-40 transition-all duration-300"
+          />
         </button>
         <button
           className="col-span-3 w-full h-full cursor-pointer"
           onClick={onOpen}
         >
-          <img src={Image4} alt="" className="w-full h-full object-cover" />
+          <img
+            src={Image4}
+            alt=""
+            className="w-full h-full object-cover hover:opacity-40 transition-all duration-300"
+          />
         </button>
         <button
           className="col-span-4 w-full h-full cursor-pointer"
           onClick={onOpen}
         >
-          <img src={Image5} alt="" className="w-full h-full object-cover" />
+          <img
+            src={Image5}
+            alt=""
+            className="w-full h-full object-cover hover:opacity-40 transition-all duration-300"
+          />
         </button>
         <button className="col-span-2 w-full h-full" onClick={onOpen}>
-          <img src={Image6} alt="" className="w-full h-full object-cover" />
+          <img
+            src={Image6}
+            alt=""
+            className="w-full h-full object-cover hover:opacity-40 transition-all duration-300"
+          />
         </button>
       </div>
     </motion.div>
