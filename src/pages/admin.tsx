@@ -19,7 +19,7 @@ export default function AdminPage() {
     }
   };
   return (
-    <div className="h-screen flex justify-center w-full sm:w-125 mx-auto">
+    <div className="h-screen flex justify-center w-full lg:w-4/6 md:w-5/6 mx-auto duration-300 transition-all">
       <NavbarAdmin active={activeSection} onChange={setActiveSection} />
       <div className="relative w-full flex flex-col items-center">
         <div className="flex flex-col items-center justify-center bg-white shadow-[0px_4px_22px_3px_rgba(0,0,0,0.1)] rounded-lg sm:p-10 p-5 font-google-sans w-full">

@@ -22,11 +22,11 @@ export default function NavbarAdmin({
       initial={{ y: -50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className="fixed top-0 left-1/2 -translate-x-1/2 transition-all duration-300 rounded-xl flex items-center justify-end z-50 my-5 sm:px-10 px-5 sm:w-125 w-full"
+      className="fixed top-0 left-1/2 -translate-x-1/2 transition-all duration-300 rounded-xl flex items-center justify-end z-50 my-5 sm:px-10 px-5 lg:w-4/6 md:w-5/6 w-full"
     >
       <motion.button
         onClick={() => setShow(!show)}
-        className="rounded-full w-10 h-10 flex items-center justify-center bg-black cursor-pointer"
+        className="rounded-full w-7 h-7 flex items-center justify-center bg-black cursor-pointer"
         animate={{ rotate: show ? 180 : 0 }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
