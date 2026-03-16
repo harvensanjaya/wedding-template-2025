@@ -27,18 +27,18 @@ export default function Navbar() {
     <>
       <motion.nav
         className={`fixed w-full z-50 h-fit transition-all duration-300
-      ${navState === "transparent" ? "bg-transparent" : "bg-black"}
+      ${navState !== "transparent" ? "bg-black" : "bg-transparent"}
     `}
         animate={{
           y: navState === "hidden" ? -100 : 0,
           opacity: navState === "hidden" ? 0 : 1,
         }}
       >
-        <div className="flex justify-center items-center w-full max-w-250 mx-auto">
-          <div className="flex-1 text-white font-italiana text-2xl px-5">
+        <div className='flex justify-center items-center w-full max-w-250 mx-auto'>
+          <div className='flex-1 text-white font-italiana text-2xl px-5'>
             Nico & Devi
           </div>
-          <ul className="flex-1 md:flex hidden font-inter gap-10 justify-end text-base text-white ">
+          <ul className='flex-1 md:flex hidden font-inter gap-10 justify-end text-base text-white '>
             {SECTIONS.map((s) => (
               <li key={s.id}>
                 <button
@@ -52,11 +52,11 @@ export default function Navbar() {
               </li>
             ))}
           </ul>
-          <button className="md:p-0 p-5" onClick={() => setShowMenu(!showMenu)}>
+          <button className='md:p-0 p-5' onClick={() => setShowMenu(!showMenu)}>
             {showMenu === true ? (
-              <IoMdClose className="text-white md:hidden text-2xl " />
+              <IoMdClose className='text-white md:hidden text-2xl ' />
             ) : (
-              <TbMenu3 className="text-white md:hidden text-2xl " />
+              <TbMenu3 className='text-white md:hidden text-2xl ' />
             )}
           </button>
         </div>

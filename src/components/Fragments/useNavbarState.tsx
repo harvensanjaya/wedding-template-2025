@@ -10,7 +10,7 @@ export function useNavbarState({
   hiddenIds: string[];
 }) {
   const [inHidden, setInHidden] = useState(false);
-  const [inTransparent, setInTransparent] = useState(false);
+  const [inTransparent, setInTransparent] = useState(true);
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -21,7 +21,7 @@ export function useNavbarState({
 
       const observer = new IntersectionObserver(
         ([entry]) => setter(entry.isIntersecting),
-        { threshold: 0.3 }
+        { threshold: 0.3 },
       );
 
       observer.observe(el);

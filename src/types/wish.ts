@@ -4,7 +4,7 @@ export interface Wish {
   id: string;
   fullname: string;
   wish: string;
-  attend: boolean;
-  number_guest: number;
+  status: string;
+  number_of_guest: number;
   createdAt?: Timestamp;
 }
