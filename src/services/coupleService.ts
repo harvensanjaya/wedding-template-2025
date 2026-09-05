@@ -1,15 +1,11 @@
-import api from "./api";
+import type { CoupleData } from "../types/couple";
+import { apiFetch } from "./api";
 
-interface IFormData {
-  groom_name: string;
-  groom_father: string;
-  groom_mother: string;
-  bride_name: string;
-  bride_father: string;
-  bride_mother: string;
+interface CoupleResponse {
+  data: CoupleData;
 }
 
-export const updateCoupleDetails = (formData: IFormData) => {
-  // 'formData' here is the FormData object we build in the component
-  return api.post("/couple", formData);
-};
+export async function getCouple(slug: string): Promise<CoupleData> {
+  const response = await apiFetch<CoupleResponse>(`/invitations/${slug}`);
+  return response.data;
+}

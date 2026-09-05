@@ -1,11 +1,41 @@
 import { motion } from "motion/react";
 import { fadeUpSection } from "../utils/sectionAnimation";
 
-import Bride from "../../assets/Bride.jpg";
-import Groom from "../../assets/Groom.jpg";
-import GroomBride from "../../assets/GroomBride.jpg";
+import defaultBride from "../../assets/Bride.jpg";
+import defaultGroom from "../../assets/Groom.jpg";
+import defaultGroomBride from "../../assets/GroomBride.jpg";
 
-export default function GroomBrideSection() {
+interface GroomBrideSectionProps {
+  couplePhoto?: string;
+  groomPhoto?: string;
+  groomName?: string;
+  groomFatherName?: string;
+  groomMotherName?: string;
+  bridePhoto?: string;
+  brideName?: string;
+  brideFatherName?: string;
+  brideMotherName?: string;
+}
+
+function getParentsText(fatherName?: string, motherName?: string): string {
+  if (!fatherName && !motherName) return "";
+  if (fatherName && motherName) {
+    return `Mr. ${fatherName} & Mrs. ${motherName}`;
+  }
+  return `Mr./Mrs. ${fatherName ?? motherName}`;
+}
+
+export default function GroomBrideSection({
+  couplePhoto = defaultGroomBride,
+  groomPhoto = defaultGroom,
+  groomName = "...",
+  groomFatherName,
+  groomMotherName,
+  bridePhoto = defaultBride,
+  brideName = "...",
+  brideFatherName,
+  brideMotherName,
+}: Readonly<GroomBrideSectionProps>) {
   return (
     <motion.div
       className="w-full lg:h-screen flex lg:flex-row flex-col"
@@ -15,13 +45,13 @@ export default function GroomBrideSection() {
       viewport={{ once: true }}
     >
       <div className="lg:flex-1">
-        <img src={GroomBride} alt="" className="h-full object-cover" />
+        <img src={couplePhoto} alt="" className="h-full w-full object-cover" />
       </div>
       <div className="lg:flex-1 flex flex-col sm:h-screen h-[50%] transition-all transition-discrete duration-300">
         <div className="flex flex-1">
           <div className="flex-1 relative">
             <img
-              src={Groom}
+              src={groomPhoto}
               alt=""
               className="h-full w-full absolute inset-0 object-cover"
             />
@@ -33,14 +63,12 @@ export default function GroomBrideSection() {
                   THE GROOM
                 </p>
                 <p className="font-italiana 2xl:text-7xl md:text-6xl sm:text-5xl text-4xl">
-                  Nico Saputra
+                  {groomName}
                 </p>
               </div>
               <div>
                 <p className="font-inter 2xl:text-xl md:text-lg sm:text-sm text-xs text-black/50 italic font-light transition-all duration-300">
-                  The son of Mr. Edward Ng <br />
-                  and <br />
-                  Mrs. Lainie Layardi Laij
+                  The son of {getParentsText(groomFatherName, groomMotherName)}
                 </p>
               </div>
             </div>
@@ -54,22 +82,20 @@ export default function GroomBrideSection() {
                   THE BRIDE
                 </p>
                 <p className="font-italiana 2xl:text-7xl md:text-6xl sm:text-5xl text-4xl">
-                  Devi Nicholas
+                  {brideName}
                 </p>
               </div>
               <div>
                 <p className="font-inter 2xl:text-xl md:text-lg sm:text-sm text-xs text-black/50 italic font-light transition-all duration-300">
-                  The daugther of Mr. Sukaman
-                  <br />
-                  and <br />
-                  Mrs. Rosnie Mintan
+                  The daughter of{" "}
+                  {getParentsText(brideFatherName, brideMotherName)}
                 </p>
               </div>
             </div>
           </div>
           <div className="flex-1 relative min-h-0">
             <img
-              src={Bride}
+              src={bridePhoto}
               alt=""
               className="h-full w-full absolute object-cover"
             />

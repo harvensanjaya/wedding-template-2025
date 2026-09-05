@@ -2,13 +2,19 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { IoPause, IoPlay } from "react-icons/io5";
 
-import Music from "../../assets/Bruno Mars - Just the Way You Are (Piano Solo Cover) - The Piano Guys.mp3";
-
 interface MusicPlayerProps {
   className?: string;
+  songUrl?: string;
+  songTitle?: string;
+  songArtist?: string;
 }
 
-export default function MusicPlayer({ className }: Readonly<MusicPlayerProps>) {
+export default function MusicPlayer({
+  className,
+  songUrl,
+  songTitle,
+  songArtist,
+}: Readonly<MusicPlayerProps>) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
@@ -28,6 +34,8 @@ export default function MusicPlayer({ className }: Readonly<MusicPlayerProps>) {
   }, [isPlaying]);
 
   useEffect(() => {
+    if (!songTitle && !songArtist) return;
+
     // show text
     const showTimer = setTimeout(() => {
       setIsExpanded(true);
@@ -42,11 +50,15 @@ export default function MusicPlayer({ className }: Readonly<MusicPlayerProps>) {
       clearTimeout(showTimer);
       clearTimeout(hideTimer);
     };
-  }, []);
+  }, [songTitle, songArtist]);
+
+  if (!songUrl) return null;
+
+  const label = [songTitle, songArtist].filter(Boolean).join(" - ");
 
   return (
     <>
-      <audio ref={audioRef} src={Music} autoPlay></audio>
+      <audio ref={audioRef} src={songUrl} autoPlay></audio>
       <div
         className={`fixed z-50 flex items-center justify-center ${className}`}
       >
@@ -55,26 +67,27 @@ export default function MusicPlayer({ className }: Readonly<MusicPlayerProps>) {
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
-          className="w-fit h-fit rounded-full bg-[#d9d9d9] shadow-2xl flex items-center justify-center gap-2 p-2"
+          className="w-fit h-fit rounded-full bg-black text-white shadow-lg flex items-center justify-center gap-2 p-1"
         >
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsPlaying((prev) => !prev)}
-            className="p-3 rounded-full bg-black/80 text-white text-xl"
+            className="p-2 rounded-full bg-white/10 text-white text-xl cursor-pointer"
+            aria-label={isPlaying ? "Pause music" : "Play music"}
           >
             {isPlaying ? <IoPause /> : <IoPlay />}
           </motion.button>
 
           <AnimatePresence>
-            {isExpanded && (
+            {isExpanded && label && (
               <motion.p
                 initial={{ width: 0, opacity: 0 }}
                 animate={{ width: "auto", opacity: 1 }}
                 exit={{ width: 0, opacity: 0 }}
                 transition={{ duration: 0.6, ease: "easeInOut" }}
-                className="overflow-hidden whitespace-nowrap font-inter text-sm pr-3"
+                className="overflow-hidden whitespace-nowrap font-inter text-xs pr-3"
               >
-                <i>Menceritakanmu - Batas Senja</i>
+                <i>{label}</i>
               </motion.p>
             )}
           </AnimatePresence>

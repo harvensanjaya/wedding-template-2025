@@ -3,11 +3,11 @@ import ProtectedRoute from "./components/utils/ProtectedRoutes";
 import "./index.css";
 import Home from "./pages";
 import AdminPage from "./pages/admin";
-import LoginPage from "./pages/login";
+// import LoginPage from "./pages/login";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/:slug/:guestSlug?",
     element: <Home />,
   },
   {
@@ -23,7 +23,7 @@ const router = createBrowserRouter([
 
   {
     path: "/login",
-    element: <LoginPage />,
+    // element: <LoginPage />,
   },
 ]);
 

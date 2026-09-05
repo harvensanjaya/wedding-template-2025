@@ -1,21 +1,20 @@
 import { useState } from "react";
 
-import GalleryAdminSection from "../components/Layouts/GallerySectionAdmin";
-import GroomBrideSectionAdmin from "../components/Layouts/GroomBrideSectionAdmin";
 import NavbarAdmin from "../components/Layouts/NavbarAdmin";
-import RsvpSectionAdmin from "../components/Layouts/RsvpSectionAdmin";
 
 export default function AdminPage() {
   const [activeSection, setActiveSection] = useState("rsvp"); // default
 
   const renderSection = () => {
-    switch (activeSection) {
-      case "bride-groom":
-        return <GroomBrideSectionAdmin />;
-      case "gallery":
-        return <GalleryAdminSection />;
-      default:
-        return <RsvpSectionAdmin />;
+    switch (
+      activeSection
+      // case "bride-groom":
+      //   return <GroomBrideSectionAdmin />;
+      // case "gallery":
+      // return <GalleryAdminSection />;
+      // default:
+      //   return <RsvpSectionAdmin />;
+    ) {
     }
   };
   return (
@@ -27,7 +26,7 @@ export default function AdminPage() {
             <p className="font-italiana text-4xl">Nico & Devi</p>
             <p className="font-italiana text-4xl">Wedding</p>
           </div>
-          {renderSection()}
+          {/* {renderSection()} */}
         </div>
       </div>
     </div>

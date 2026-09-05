@@ -1,16 +1,47 @@
 import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
 
-import coverImage from "../../assets/cover.jpg";
+import defaultCoverImage from "../../assets/cover.jpg";
 import Button from "../Elements/Button";
 import Ornaments from "../Fragments/Ornaments";
 
 interface CoverScreenProps {
   onClick?: () => void;
+  coverImage?: string;
+  groomName?: string;
+  brideName?: string;
+  weddingDate?: string;
+  guestName?: string;
+  requireCode?: boolean;
+  onVerifyCode?: (code: string) => Promise<void> | void;
+  verifyLoading?: boolean;
+  verifyError?: string | null;
+}
+
+function getFirstName(fullName: string): string {
+  return fullName.trim().split(" ")[0] ?? fullName;
 }
 
 export default function CoverScreen({
   onClick = () => {},
+  coverImage = defaultCoverImage,
+  groomName = "...",
+  brideName = "...",
+  weddingDate = "",
+  guestName = "Guest",
+  requireCode = false,
+  onVerifyCode = async () => {},
+  verifyLoading = false,
+  verifyError = null,
 }: Readonly<CoverScreenProps>) {
+  const [code, setCode] = useState("");
+
+  const handleVerify = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!code) return;
+    onVerifyCode(code);
+  };
+
   return (
     <AnimatePresence>
       <div className="relative w-full h-screen">
@@ -68,7 +99,7 @@ export default function CoverScreen({
               }}
               transition={{ duration: 1.3 }}
             >
-              Nico & Devi
+              {getFirstName(groomName)} & {getFirstName(brideName)}
             </motion.h1>
             <motion.p
               className="font-inter lg:text-xl sm:text-lg text-base font-extralight transition-all duration-300"
@@ -78,12 +109,12 @@ export default function CoverScreen({
               }}
               transition={{ duration: 1.3 }}
             >
-              24 November 2025
+              {weddingDate}
             </motion.p>
           </motion.div>
 
           <motion.div
-            className="flex flex-col items-center relative z-20"
+            className="flex flex-col items-center relative z-20 w-full px-10"
             variants={{
               hidden: { opacity: 0 },
               visible: { opacity: 1 },
@@ -91,12 +122,40 @@ export default function CoverScreen({
             transition={{ duration: 1.3 }}
           >
             <p className="font-inter font-extralight lg:text-xl sm:text-lg text-base transition-all duration-300">
-              Dear, Hendra
+              Dear, {guestName}
             </p>
             <p className="font-inter font-extralight lg:text-xl sm:text-lg text-base pb-5 transition-all duration-300">
               you are invited
             </p>
-            <Button onClick={onClick}>Open Full Invitation</Button>
+
+            {requireCode ? (
+              <form
+                onSubmit={handleVerify}
+                className="flex flex-col items-center gap-3 w-full max-w-70"
+              >
+                <input
+                  type="text"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value)}
+                  placeholder="Enter your invitation code"
+                  className="w-full text-center border p-2 font-inter font-light focus:outline-none"
+                />
+                {verifyError && (
+                  <p className="text-red-500 text-xs text-center">
+                    {verifyError}
+                  </p>
+                )}
+                <Button
+                  type="submit"
+                  disabled={verifyLoading}
+                  className="w-fit"
+                >
+                  {verifyLoading ? "VERIFYING..." : "VERIFY & OPEN"}
+                </Button>
+              </form>
+            ) : (
+              <Button onClick={onClick}>Open Full Invitation</Button>
+            )}
           </motion.div>
 
           <motion.div

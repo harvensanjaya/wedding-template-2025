@@ -1,21 +1,64 @@
 import { motion } from "motion/react";
+import type { GalleryRow } from "../../types/couple";
 import { fadeUpSection } from "../utils/sectionAnimation";
-
-import Image1 from "../../assets/download (3).jpg";
-import Image2 from "../../assets/download (4).jpg";
-import Image3 from "../../assets/download (5).jpg";
-import Image4 from "../../assets/download (6).jpg";
-import Image5 from "../../assets/download (7).jpg";
-import Image6 from "../../assets/download (8).jpg";
 
 interface GallerySectionProps {
   className?: string;
-  onOpen?: () => void;
+  gallery?: GalleryRow[];
+  onOpen?: (index: number) => void;
   id?: string;
 }
 
+function getColumnSpan(photosPerRow: number): number {
+  switch (photosPerRow) {
+    case 1:
+      return 12;
+    case 2:
+      return 6;
+    case 3:
+      return 4;
+    case 4:
+      return 3;
+    default:
+      return 12;
+  }
+}
+
+interface FlatPhoto {
+  url: string;
+  globalIndex: number;
+}
+
+interface RowWithIndex {
+  row: GalleryRow;
+  photos: FlatPhoto[];
+}
+
+function buildRowsWithIndex(gallery: GalleryRow[]): RowWithIndex[] {
+  const sortedRows = gallery.slice().sort((a, b) => a.row_order - b.row_order);
+
+  const { rows } = sortedRows.reduce<{ rows: RowWithIndex[]; count: number }>(
+    (acc, row) => {
+      const photosWithIndex: FlatPhoto[] = row.photos.map((url, i) => ({
+        url,
+        globalIndex: acc.count + i,
+      }));
+
+      return {
+        rows: [...acc.rows, { row, photos: photosWithIndex }],
+        count: acc.count + row.photos.length,
+      };
+    },
+    { rows: [], count: 0 },
+  );
+
+  return rows;
+}
+
 export default function GallerySection(props: Readonly<GallerySectionProps>) {
-  const { className = "", onOpen = () => {}, id = "" } = props;
+  const { className = "", gallery = [], onOpen = () => {}, id = "" } = props;
+
+  const rowsWithIndex = buildRowsWithIndex(gallery);
 
   return (
     <motion.div
@@ -29,65 +72,38 @@ export default function GallerySection(props: Readonly<GallerySectionProps>) {
       <h2 className="font-italiana md:text-6xl text-5xl transition-all duration-300">
         GALLERY
       </h2>
-      <div className="grid w-full grid-cols-6 lg:auto-rows-[400px] auto-rows-[200px] bg-black">
-        <button
-          className="col-span-2 w-full h-full cursor-pointer hover:opacity-40 transition-all duration-300"
-          onClick={onOpen}
-        >
-          <img
-            src={Image1}
-            alt=""
-            className="w-full h-full object-cover hover:opacity-40 transition-all duration-300"
-          />
-        </button>
-        <button
-          className="col-span-4 w-full h-full cursor-pointer"
-          onClick={onOpen}
-        >
-          <img
-            src={Image2}
-            alt=""
-            className="w-full h-full object-cover hover:opacity-40 transition-all duration-300"
-          />
-        </button>
-        <button
-          className=" col-span-3 w-full h-full cursor-pointer"
-          onClick={onOpen}
-        >
-          <img
-            src={Image3}
-            alt=""
-            className=" w-full h-full object-cover hover:opacity-40 transition-all duration-300"
-          />
-        </button>
-        <button
-          className="col-span-3 w-full h-full cursor-pointer"
-          onClick={onOpen}
-        >
-          <img
-            src={Image4}
-            alt=""
-            className="w-full h-full object-cover hover:opacity-40 transition-all duration-300"
-          />
-        </button>
-        <button
-          className="col-span-4 w-full h-full cursor-pointer"
-          onClick={onOpen}
-        >
-          <img
-            src={Image5}
-            alt=""
-            className="w-full h-full object-cover hover:opacity-40 transition-all duration-300"
-          />
-        </button>
-        <button className="col-span-2 w-full h-full" onClick={onOpen}>
-          <img
-            src={Image6}
-            alt=""
-            className="w-full h-full object-cover hover:opacity-40 transition-all duration-300"
-          />
-        </button>
-      </div>
+
+      {gallery.length === 0 ? (
+        <p className="text-black/50 pb-10">No photos yet.</p>
+      ) : (
+        <div className="w-full bg-black">
+          {rowsWithIndex.map(({ row, photos }, rowIdx) => (
+            <div
+              key={rowIdx}
+              className="grid grid-cols-12 lg:auto-rows-[400px] auto-rows-[200px]"
+            >
+              {photos.map((photo, photoIdx) => (
+                <button
+                  key={photoIdx}
+                  className="w-full h-full cursor-pointer overflow-hidden"
+                  style={{
+                    gridColumn: `span ${getColumnSpan(
+                      row.photos_per_row,
+                    )} / span ${getColumnSpan(row.photos_per_row)}`,
+                  }}
+                  onClick={() => onOpen(photo.globalIndex)}
+                >
+                  <img
+                    src={photo.url}
+                    alt=""
+                    className="w-full h-full object-cover hover:opacity-40 transition-all duration-300"
+                  />
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
     </motion.div>
   );
 }

@@ -1,10 +1,12 @@
 import { motion } from "motion/react";
 import { fadeUpSection } from "../utils/sectionAnimation";
 
+import type { BankAccount } from "../../types/couple";
 import Button from "../Elements/Button";
 
 interface SendGiftSectionProps {
   onOpen?: () => void;
+  gifts?: BankAccount[];
 }
 
 export default function SendGiftSection(props: Readonly<SendGiftSectionProps>) {
